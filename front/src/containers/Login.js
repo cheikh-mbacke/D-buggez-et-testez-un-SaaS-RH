@@ -18,11 +18,9 @@ export default class Login {
     handleSubmitEmployee = e => {
         e.preventDefault()
         const user = {
-            // Issue 2
-            // Modification du type de l'utilisateur (employee -> Admin) + modification des data-testid
-            type: "Admin",
-            email: e.target.querySelector(`input[data-testid="admin-email-input"]`).value,
-            password: e.target.querySelector(`input[data-testid="admin-password-input"]`).value,
+            type: "Employee",
+            email: e.target.querySelector(`input[data-testid="employee-email-input"]`).value,
+            password: e.target.querySelector(`input[data-testid="employee-password-input"]`).value,
             status: "connected"
         }
         this.localStorage.setItem("user", JSON.stringify(user))
@@ -42,9 +40,11 @@ export default class Login {
     handleSubmitAdmin = e => {
         e.preventDefault()
         const user = {
+            // Issue 2
+            // Modification du type de l'utilisateur (employee -> Admin) + modification des data-testid
             type: "Admin",
-            email: e.target.querySelector(`input[data-testid="employee-email-input"]`).value,
-            password: e.target.querySelector(`input[data-testid="employee-password-input"]`).value,
+            email: e.target.querySelector(`input[data-testid="admin-email-input"]`).value,
+            password: e.target.querySelector(`input[data-testid="admin-password-input"]`).value,
             status: "connected"
         }
         this.localStorage.setItem("user", JSON.stringify(user))
