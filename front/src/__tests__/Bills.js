@@ -37,5 +37,12 @@ describe("Given I am connected as an employee", () => {
             const datesSorted = [...dates].sort(antiChrono)
             expect(dates).toEqual(datesSorted)
         })
+
+        // Vérifie que la page contient bien le titre "Mes notes de frais"
+        test('Then bills page should contains "Mes notes de frais" title', async () => {
+            document.body.innerHTML = BillsUI({ data: bills })
+            await waitFor(() => screen.getByText("Mes notes de frais"))
+            expect(screen.getByText("Mes notes de frais")).toBeTruthy()
+        })
     })
 })
