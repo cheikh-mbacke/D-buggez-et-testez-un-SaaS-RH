@@ -78,5 +78,36 @@ describe("Given I am connected as an employee", () => {
                 expect(screen.getByText("Envoyer une note de frais")).toBeTruthy();
             });
         });
+
+        // Vérifie si la modale contenant le justificatif de la note de frais apparaît
+        describe('When I click on the icon eye', () => {
+            test('Then a modal should appear', () => {
+                const onNavigate = (pathname) => {
+                    document.body.innerHTML = ROUTES({ pathname })
+                };
+                Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+                window.localStorage.setItem('user', JSON.stringify({
+                    type: 'Employee'
+                }));
+                const billsPage = new Bills({
+                    document,
+                    onNavigate,
+                    store: mockStore,
+                    localStorage: window.localStorage
+                });
+                document.body.innerHTML = BillsUI({ data: bills });
+                const iconEye = screen.getAllByTestId("icon-eye");
+                const handleClickIconEye = jest.fn(billsPage.handleClickIconEye);
+                const modaleFile = document.getElementById("modaleFile");
+                $.fn.modal = jest.fn(() => modaleFile.classList.add("show"));
+
+                iconEye.forEach((icon) => {
+                    icon.addEventListener("click", handleClickIconEye(icon))
+                    fireEvent.click(icon)
+                    expect(handleClickIconEye).toHaveBeenCalled()
+                });
+                expect(modaleFile).toHaveClass("show");
+            });
+        });
     })
 })
