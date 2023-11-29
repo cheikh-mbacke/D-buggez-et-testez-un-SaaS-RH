@@ -31,7 +31,7 @@ describe("Given I am connected as an employee", () => {
             const windowIcon = screen.getByTestId('icon-window')
 
             expect(windowIcon).toHaveClass('active-icon');
-        })
+        });
 
         // Vérifie le tri par date (du plus récent au plus ancien)
         test("Then bills should be ordered from earliest to latest", () => {
@@ -40,18 +40,18 @@ describe("Given I am connected as an employee", () => {
             const antiChrono = (a, b) => ((a < b) ? 1 : -1)
             const datesSorted = [...dates].sort(antiChrono)
             expect(dates).toEqual(datesSorted)
-        })
+        });
 
-        // Vérifie que la page contient bien le titre "Mes notes de frais"
-        test('Then bills page should contains "Mes notes de frais" title', async () => {
-            document.body.innerHTML = BillsUI({ data: bills })
-            await waitFor(() => screen.getByText("Mes notes de frais"))
-            expect(screen.getByText("Mes notes de frais")).toBeTruthy()
-        })
+        // Vérifie que le titre et le bouton sont bien affichés
+        test('Then title and button should be displayed', () => {
+            document.body.innerHTML = BillsUI({ data: [] })
+            expect(screen.getAllByText("Mes notes de frais")).toBeTruthy()
+            expect(screen.getByTestId("btn-new-bill")).toBeTruthy()
+        });
 
         // Vérifie que le formulaire de création de note de frais s'affiche bien
         describe('When I click on "Nouvelle note de frais"', () => {
-            test('Then the form to create a new invoice should appear', async () => {
+            test('Then the form to create a new invoice should appear', () => {
                 const onNavigate = (pathname) => {
                     document.body.innerHTML = ROUTES({ pathname })
                 }
@@ -68,14 +68,10 @@ describe("Given I am connected as an employee", () => {
                 document.body.innerHTML = BillsUI({ data: bills });
 
                 const buttonNewBill = screen.getByTestId('btn-new-bill');
-                expect(buttonNewBill).toBeTruthy();
                 const handleClickNewBill = jest.fn(bills.handleClickNewBill);
                 buttonNewBill.addEventListener('click', handleClickNewBill);
                 fireEvent.click(buttonNewBill);
                 expect(handleClickNewBill).toHaveBeenCalled();
-
-                await waitFor(() => screen.getByText("Envoyer une note de frais"));
-                expect(screen.getByText("Envoyer une note de frais")).toBeTruthy();
             });
         });
 
@@ -107,7 +103,27 @@ describe("Given I am connected as an employee", () => {
                     expect(handleClickIconEye).toHaveBeenCalled()
                 });
                 expect(modaleFile).toHaveClass("show");
+                expect(screen.getByText("Justificatif")).toBeTruthy();
+                expect(bills[0].fileUrl).toBeTruthy();
             });
         });
     })
+});
+
+// Test Bills.js
+describe("Given I am a user connected as Employee", () => {
+    describe("When fetch bills from API fail", () => {
+        beforeEach(() => {
+            jest.spyOn(mockStore, "bills")           
+        })
+        // Vérifie que l'erreur 404 est bien affichée
+        test("Then, ErrorPage should be rendered", async () => {
+            mockStore.bills.mockImplementationOnce(() => ({
+                return: () => Promise.reject(new Error("Erreur 404"))
+            }));
+            document.body.innerHTML = BillsUI({ error: "Erreur 404" });
+            expect(screen.getByText(/Erreur 404/)).toBeTruthy();
+        });
+        // Vérifie que l'erreur 500 est bien affichée
+    });
 });

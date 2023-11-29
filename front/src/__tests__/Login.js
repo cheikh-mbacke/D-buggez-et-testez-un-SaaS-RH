@@ -27,6 +27,8 @@ describe("Given that I am a user on login page", () => {
     });
   });
 
+  //Tester si la promesse est rejetée
+
   describe("When I do fill fields in incorrect format and I click on employee button Login In", () => {
     test("Then It should renders Login page", () => {
       document.body.innerHTML = LoginUI();
