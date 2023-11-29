@@ -125,5 +125,12 @@ describe("Given I am a user connected as Employee", () => {
             expect(screen.getByText(/Erreur 404/)).toBeTruthy();
         });
         // Vérifie que l'erreur 500 est bien affichée
+        test("Then, ErrorPage should be rendered", async () => {
+            mockStore.bills.mockImplementationOnce(() => ({
+                return: () => Promise.reject(new Error("Erreur 500"))
+            }));
+            document.body.innerHTML = BillsUI({ error: "Erreur 500" });
+            expect(screen.getByText(/Erreur 500/)).toBeTruthy();
+        });
     });
 });
