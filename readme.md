@@ -1,6 +1,3 @@
-
-![formation](./images/openClassRooms.png)
-
 # Formation Développeur d'application - JavaScript React
 
 ## 📎 Projet 9 : Billed - Débuggez et testez un SaaS RH
