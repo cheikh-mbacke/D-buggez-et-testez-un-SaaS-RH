@@ -1,6 +1,4 @@
-# Formation Développeur d'application - JavaScript React
-
-## 📎 Projet 9 : Billed - Débuggez et testez un SaaS RH
+# Débuggez et testez un SaaS RH
 
 ![home](./images/home.png)
 
@@ -10,10 +8,8 @@
 - JS
 - Jest
 
-![GitHub repo size](https://img.shields.io/github/repo-size/Cyril-Develop/DebuggezEtTestezUnSaaSRH?style=for-the-badge) 
-
  ## Tester le projet :
 
 ```terminal
-git clone https://github.com/Cyril-Develop/DebuggezEtTestezUnSaaSRH.git
+git clone [https://github.com/Cyril-Develop/DebuggezEtTestezUnSaaSRH.git](https://github.com/cheikh-mbacke/D-buggez-et-testez-un-SaaS-RH.git)
 ```
